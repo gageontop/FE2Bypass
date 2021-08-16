@@ -1,9 +1,5 @@
---[[ Settings ]]--
-
-local title = "FE2 Bypass by gage#7766    |    Toggle GUI With X"  -- Name Gui
-local theme = "Dark" -- Themes: https://raw.githubusercontent.com/gageontop/Themes/main/names.txt
--- -- -- -- --
-
+local title = "FE2 Bypass by gage#7766    |    Toggle GUI With X"
+local theme = "Dark"
 local setting = "Hold"
 local infenabled = true
 local godenabled = true
@@ -60,7 +56,7 @@ local ToggleButton = InfiniteJumpPage.Toggle({
 })
 
 local Dropdown = InfiniteJumpPage.Dropdown({
-	Text = "Dropdown",
+	Text = "Mode",
 	Callback = function(value)
 		setting = value
 		Text = setting
@@ -89,13 +85,8 @@ local ToggleButton2 = GodPage.Toggle({
 -- lol
 function god()
 	if godenabled then
-	while godenabled do
-		game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
-		game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999	
-		wait()
-		game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
-		game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999	
-		end
+            game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
+            game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999
 	end
 end
 
@@ -124,12 +115,8 @@ uis.InputEnded:Connect(function(inp,gpe)
 	end
 end)
 
-function work()
-	spawn(god)
-	spawn(whileHeld)
-end
-
-game["Run Service"].RenderStepped:Connect(work)
+game["Run Service"].RenderStepped:Connect(god)
+game["Run Service"].RenderStepped:Connect(whileHeld)
 
 -- Toggle Gui
 game:GetService("UserInputService").InputBegan:connect(function(inp,gpe)
