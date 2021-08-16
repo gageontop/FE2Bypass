@@ -90,6 +90,8 @@ local ToggleButton2 = GodPage.Toggle({
 function god()
 	if godenabled then
 	while godenabled do
+		game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
+		game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999	
 		wait()
 		game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
 		game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999	
