@@ -1,0 +1,136 @@
+--[[ Settings ]]--
+
+local title = "FE2 Bypass by gage#7766    |    Toggle GUI With X"  -- Name Gui
+local theme = "Dark" -- Themes: https://raw.githubusercontent.com/gageontop/Themes/main/names.txt
+-- -- -- -- --
+
+local setting = "Hold"
+local infenabled = true
+local godenabled = true
+local held = false
+local uis = game:GetService("UserInputService")
+-- Load Gui
+
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+local UI = Material.Load({
+	Title = title,
+	Style = 1,
+	SizeX = 400,
+	SizeY = 225,
+	Theme = theme
+})
+--------------------------
+-- Page Inserts
+local InfiniteJumpPage = UI.New({
+	Title = "Infinite Jump"
+})
+
+local GodPage = UI.New({
+	Title = "God Mode"
+})
+
+local MiscPage = UI.New({
+	Title = "MISC"
+})
+--------------------------
+-- Info Inserts
+local InfoText = InfiniteJumpPage.Label({
+	Text = "Infinite Jump Settings (auto on hold)",
+})
+
+local InfoText2 = MiscPage.Label({
+	Text = "Misc Settings (nothing here rn)",
+})
+
+local InfoText2 = GodPage.Label({
+	Text = "Godmode Settings",
+})
+
+--------------------------
+-- Page Codes
+
+-- inf jump
+local ToggleButton = InfiniteJumpPage.Toggle({
+	Text = "Enabled",
+	Callback = function(value)
+		infenabled = value
+		Text = infenabled
+	end,
+	Enabled = infenabled
+})
+
+local Dropdown = InfiniteJumpPage.Dropdown({
+	Text = "Dropdown",
+	Callback = function(value)
+		setting = value
+		Text = setting
+	end,
+	Options = {"Hold", "Spam"}
+})
+
+-- god mode
+
+local ToggleButton2 = GodPage.Toggle({
+	Text = "Enabled",
+	Callback = function(value)
+		godenabled = value
+		Text = godenabled
+	end,
+	Enabled = godenabled
+})
+
+-- misc
+
+-- nothing rn
+
+--------------------------
+
+-- scripts
+
+function god()
+	if godenabled then
+		game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
+		game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999
+	end
+end
+
+function whileHeld()
+	if held == true and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() ~= Enum.HumanoidStateType.Dead and infenabled == true and setting == "Hold" then
+		game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+	end
+end
+
+uis.InputBegan:Connect(function(inp,gpe)
+	if not gpe then
+		if inp.KeyCode == Enum.KeyCode.Space then
+			held = true
+			if setting == "Spam" and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() ~= Enum.HumanoidStateType.Dead and infenabled == true then
+				game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+			end
+		end
+	end
+end)
+
+uis.InputEnded:Connect(function(inp,gpe)
+	if not gpe then
+		if inp.KeyCode == Enum.KeyCode.Space then
+			held = false
+		end
+	end
+end)
+
+function work()
+	spawn(god)
+	spawn(whileHeld)
+end
+
+game["Run Service"].RenderStepped:Connect(work)
+
+-- Toggle Gui
+game:GetService("UserInputService").InputBegan:connect(function(inp,gpe)
+	if gpe then return end
+	if inp.KeyCode == Enum.KeyCode.X then
+		game:GetService("CoreGui")[title].Enabled = not game:GetService("CoreGui")[title].Enabled
+	end
+end)
+-----------------------------
