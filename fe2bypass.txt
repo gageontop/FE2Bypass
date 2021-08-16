@@ -86,7 +86,7 @@ local ToggleButton2 = GodPage.Toggle({
 --------------------------
 
 -- scripts
-
+-- lol
 function god()
 	if godenabled then
 	while godenabled do
