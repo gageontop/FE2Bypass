@@ -1,9 +1,9 @@
 local title = "FE2 Bypass by gage#7766    |    Toggle GUI With X"
 local theme = "Dark"
-local setting = "Hold"
-local infenabled = true
-local godenabled = true
-local held = false
+_G.setting = "Hold"
+_G.infenabled = true
+_G.godenabled = true
+_G.held = false
 local uis = game:GetService("UserInputService")
 -- Load Gui
 -- lol
@@ -49,17 +49,17 @@ local InfoText2 = GodPage.Label({
 local ToggleButton = InfiniteJumpPage.Toggle({
 	Text = "Enabled",
 	Callback = function(value)
-		infenabled = value
-		Text = infenabled
+		_G.infenabled = value
+		Text = _G.infenabled
 	end,
-	Enabled = infenabled
+	Enabled = _G.infenabled
 })
 
 local Dropdown = InfiniteJumpPage.Dropdown({
 	Text = "Mode",
 	Callback = function(value)
-		setting = value
-		Text = setting
+		_G.setting = value
+		Text = _G.setting
 	end,
 	Options = {"Hold", "Spam"}
 })
@@ -69,10 +69,10 @@ local Dropdown = InfiniteJumpPage.Dropdown({
 local ToggleButton2 = GodPage.Toggle({
 	Text = "Enabled",
 	Callback = function(value)
-		godenabled = value
-		Text = godenabled
+		_G.godenabled = value
+		Text = _G.godenabled
 	end,
-	Enabled = godenabled
+	Enabled = _G.godenabled
 })
 
 -- misc
@@ -84,14 +84,14 @@ local ToggleButton2 = GodPage.Toggle({
 -- scripts
 -- lol
 function god()
-	if godenabled then
+	if _G.godenabled then
             game.Players.LocalPlayer.Character.Humanoid.MaxHealth = 9999999999999999
             game.Players.LocalPlayer.Character.Humanoid.Health = 9999999999999999
 	end
 end
 
 function whileHeld()
-	if held == true and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() ~= Enum.HumanoidStateType.Dead and infenabled == true and setting == "Hold" then
+	if _G.held == true and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() ~= Enum.HumanoidStateType.Dead and _G.infenabled == true and _G.setting == "Hold" then
 		game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
 	end
 end
@@ -99,8 +99,8 @@ end
 uis.InputBegan:Connect(function(inp,gpe)
 	if not gpe then
 		if inp.KeyCode == Enum.KeyCode.Space then
-			held = true
-			if setting == "Spam" and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() ~= Enum.HumanoidStateType.Dead and infenabled == true then
+			_G.held = true
+			if _G.setting == "Spam" and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetState() ~= Enum.HumanoidStateType.Dead and _G.infenabled == true then
 				game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
 			end
 		end
@@ -110,7 +110,7 @@ end)
 uis.InputEnded:Connect(function(inp,gpe)
 	if not gpe then
 		if inp.KeyCode == Enum.KeyCode.Space then
-			held = false
+			_G.held = false
 		end
 	end
 end)
