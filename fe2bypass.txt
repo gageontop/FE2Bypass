@@ -1,10 +1,8 @@
 local title = "FE2 Bypass by gage#7766    |    Toggle GUI With X"
 local theme = "Dark"
-_G.setting = "Hold"
-_G.infenabled = true
-_G.godenabled = true
-_G.held = false
 local uis = game:GetService("UserInputService")
+_G.setting = "Hold"
+local multiplayer = workspace.Multiplayer
 -- Load Gui
 -- lol
 local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
@@ -25,6 +23,10 @@ local GodPage = UI.New({
 	Title = "God Mode"
 })
 
+local FarmPage = UI.New({
+	Title = "Farm"
+})
+
 local MiscPage = UI.New({
 	Title = "MISC"
 })
@@ -38,7 +40,7 @@ local InfoText2 = MiscPage.Label({
 	Text = "Misc Settings (nothing here rn)",
 })
 
-local InfoText2 = GodPage.Label({
+local InfoText3 = GodPage.Label({
 	Text = "Godmode Settings",
 })
 
@@ -73,6 +75,25 @@ local ToggleButton2 = GodPage.Toggle({
 		Text = _G.godenabled
 	end,
 	Enabled = _G.godenabled
+})
+
+-- farm
+local AutoRescue = FarmPage.Toggle({
+	Text = "Auto Rescue",
+	Callback = function(value)
+		_G.Rescue = value
+		Text = _G.Rescue
+	end,
+	Enabled = _G.Rescue
+})
+
+local AutoPage = FarmPage.Toggle({
+	Text = "Auto Page",
+	Callback = function(value)
+		_G.Page = value
+		Text = _G.Page
+	end,
+	Enabled = _G.Page
 })
 
 -- misc
@@ -115,6 +136,20 @@ uis.InputEnded:Connect(function(inp,gpe)
 	end
 end)
 
+function aye()
+    while true do
+        wait(1)
+        for i,v in pairs(multiplayer:GetDescendants()) do
+            if v.Name == "_Rescue" and _G.Rescue then
+                v.Contact.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            elseif v.Name == "_LostPage" and _G.Page then
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end
+end
+
+spawn(aye)
 game["Run Service"].RenderStepped:Connect(god)
 game["Run Service"].RenderStepped:Connect(whileHeld)
 
