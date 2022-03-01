@@ -1,4 +1,4 @@
-local title = "FE2 Bypass by gage#7766    |    Toggle GUI With X"
+local title = "FE2 Bypass by gage#0666    |    Toggle GUI With X"
 local theme = "Dark"
 local uis = game:GetService("UserInputService")
 _G.setting = "Hold"
