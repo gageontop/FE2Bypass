@@ -157,7 +157,12 @@ game["Run Service"].RenderStepped:Connect(whileHeld)
 game:GetService("UserInputService").InputBegan:connect(function(inp,gpe)
 	if gpe then return end
 	if inp.KeyCode == Enum.KeyCode.X then
-		game:GetService("CoreGui")[title].Enabled = not game:GetService("CoreGui")[title].Enabled
+		pcall(function()
+			game:GetService("CoreGui")[title].Enabled = not game:GetService("CoreGui")[title].Enabled
+		end)
+		pcall(function()
+			gethui()[title].Enabled = not gethui()[title].Enabled
+		end)
 	end
 end)
 -----------------------------
